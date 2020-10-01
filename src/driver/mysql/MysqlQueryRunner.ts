@@ -1666,7 +1666,7 @@ export class MysqlQueryRunner extends BaseQueryRunner implements QueryRunner {
             c = `\`${column.name}\` ${this.connection.driver.createFullType(column)}`;
         }
         if (column.asExpression)
-            c += ` AS (${column.asExpression}) ${column.generatedType ? column.generatedType : "VIRTUAL"}`;
+            c += ` GENERATED ALWAYS AS (${column.asExpression}) ${column.generatedType ? column.generatedType : "VIRTUAL"}`;
 
         // if you specify ZEROFILL for a numeric column, MySQL automatically adds the UNSIGNED attribute to that column.
         if (column.zerofill) {

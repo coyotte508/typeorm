@@ -2111,6 +2111,10 @@ export class PostgresQueryRunner extends BaseQueryRunner implements QueryRunner 
         } else if (!column.isGenerated || column.type === "uuid") {
             c += " " + this.connection.driver.createFullType(column);
         }
+        if (column.asExpression) {
+            // Postgres only supports STORED at the moment
+            c += ` GENERATED ALWAYS AS (${column.asExpression}) STORED`;
+        }
         if (column.charset)
             c += " CHARACTER SET \"" + column.charset + "\"";
         if (column.collation)
